@@ -15,7 +15,7 @@ config :black_jack, BlackJackWeb.Endpoint,
   url: [host: "localhost"],
   secret_key_base: "htvUM9iA0YHzcQ0v1Z3OKYWg2La2Bhfnu0UueI0P66mpdtIdx60rMML3sR+aZIIh",
   render_errors: [view: BlackJackWeb.ErrorView, accepts: ~w(html json)],
-  pubsub: [name: BlackJack.PubSub, adapter: Phoenix.PubSub.PG2],
+  pubsub_server: BlackJack.InternalPubSub,
   live_view: [
     signing_salt: "015A8dTIldakFsDRsLI6uJqAKPrWTeWJ"
   ]

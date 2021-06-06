@@ -12,10 +12,10 @@ defmodule BlackJack.Application do
       BlackJack.Repo,
       # Start the endpoint when the application starts
       BlackJackWeb.Endpoint,
+      {Phoenix.PubSub, name: BlackJack.InternalPubSub},
       # Starts a worker by calling: BlackJack.Worker.start_link(arg)
       # {BlackJack.Worker, arg},
       GameManager.Supervisor,
-      {Phoenix.PubSub.PG2, name: BlackJack.InternalPubSub, adapter: Phoenix.PubSub.PG2}
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html

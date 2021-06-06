@@ -162,7 +162,8 @@ defmodule BlackJackWeb.BlackJackLive do
     """
   end
 
-  def mount(_session, socket) do
+  @impl true
+  def mount(_params, _session, socket) do
     if connected?(socket), do: Phoenix.PubSub.subscribe BlackJack.InternalPubSub, "game"
 
     assigned_data = %{
@@ -181,7 +182,7 @@ defmodule BlackJackWeb.BlackJackLive do
     GameManager.Manager.leave_seat(socket.id)
   end
 
-  def handle_event("sit", seat_id, socket) do
+  def handle_event("sit", %{"value" => seat_id}, socket) do
     {:noreply, player_sit(seat_id, socket)}
   end
 

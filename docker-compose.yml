@@ -1,0 +1,26 @@
+version: '3.8'
+
+volumes:
+  pgdata:
+    labels:
+      - my_app_dev_vol
+
+networks:
+  my_app_dev_net:
+
+services:
+
+  postgres:
+    image: postgres:13
+    environment:
+      POSTGRES_DB: black_jack_dev
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    networks:
+      - my_app_dev_net
+    ports:
+      - 5432:5432
+    shm_size: "256mb"
+

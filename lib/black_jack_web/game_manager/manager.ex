@@ -55,7 +55,8 @@ defmodule GameManager.Manager do
   end
 
   def occupy_seat(seat_id, player_id) do
-    set("seat_#{seat_id}", init_player(player_id))
+    # set("seat_#{seat_id}", init_player(player_id))
+    set("seat_0", init_player(player_id))
 
     Phoenix.PubSub.broadcast BlackJack.InternalPubSub, "game", {:update_game_state}
   end
@@ -319,7 +320,7 @@ defmodule GameManager.Manager do
 
       # player has no more money, they gotta go!
       if get(seat_key).money == 0 && get(seat_key).current_bet == 0 do
-        set(seat_key, blank_player)
+        set(seat_key, blank_player())
       end
     end
 
@@ -448,7 +449,7 @@ defmodule GameManager.Manager do
       deal(seat_id)
 
       if did_bust(seat_id) do
-        start_next_action
+        start_next_action()
       else
         start_action_to(seat_id)
       end
@@ -457,7 +458,7 @@ defmodule GameManager.Manager do
     {:noreply, state}
   end
 
-  def handle_cast({:stand, seat_id}, state) do
+  def handle_cast({:stand, _seat_id}, state) do
     Task.start(fn ->
       if get("curr_task") do
         Process.exit(get("curr_task"), :brutal_kill)
@@ -465,7 +466,7 @@ defmodule GameManager.Manager do
         set("countdown", 0)
       end
 
-      start_next_action
+      start_next_action()
     end)
 
     {:noreply, state}
