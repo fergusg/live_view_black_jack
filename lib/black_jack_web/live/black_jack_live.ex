@@ -1,7 +1,6 @@
 defmodule BlackJackWeb.BlackJackLive do
   use Phoenix.LiveView
 
-  @impl true
   def render(assigns) do
     ~L"""
     <div>
@@ -179,40 +178,33 @@ defmodule BlackJackWeb.BlackJackLive do
     {:ok, assign(socket, assigned_data)}
   end
 
-  @impl true
   def terminate(_reason, socket) do
     GameManager.Manager.leave_seat(socket.id)
   end
 
-  @impl true
   def handle_event("sit", %{"value" => seat_id}, socket) do
     {:noreply, player_sit(seat_id, socket)}
   end
 
-  @impl true
   def handle_event("enter-name",  %{"name" => name, "seat_id" => seat_id}, socket) do
     {:noreply, enter_name(seat_id, name, socket)}
   end
 
-  @impl true
   def handle_event("enter-bet",  %{"bet" => bet, "seat_id" => seat_id}, socket) do
     {:noreply, enter_bet(seat_id, bet, socket)}
   end
 
-  @impl true
   def handle_event("hit", seat_id, socket) do
     GameManager.Manager.hit(seat_id)
     {:noreply, assign(socket, get_game_state(socket))}
   end
 
-  @impl true
   def handle_event("stand", seat_id, socket) do
     GameManager.Manager.stand(seat_id)
     {:noreply, assign(socket, get_game_state(socket))}
   end
 
   # Consume message from pubsub
-  @impl true
   def handle_info({:update_game_state}, socket) do
     {:noreply, assign(socket, get_game_state(socket))}
   end
