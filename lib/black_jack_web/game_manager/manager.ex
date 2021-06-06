@@ -54,7 +54,7 @@ defmodule GameManager.Manager do
     }
   end
 
-  def occupy_seat(seat_id, player_id) do
+  def occupy_seat(_seat_id, player_id) do
     # set("seat_#{seat_id}", init_player(player_id))
     set("seat_0", init_player(player_id))
 
